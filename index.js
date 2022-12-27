@@ -74,6 +74,12 @@ async function run(){
             const program = await cursor.toArray();
             res.send(program);
         })
+        app.get('/course', async (req, res) => {
+            const query = {};
+            const cursor = courseCollection.find(query);
+            const course = await cursor.toArray();
+            res.send(course);
+        })
         // Get Single Product by id
         app.get("/faculty/:id", async (req, res) => {
             const id = req.params.id;
