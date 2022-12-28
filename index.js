@@ -40,6 +40,7 @@ async function run(){
         const departmentCollection = client.db('PU-App').collection('department');
         const programCollection = client.db('PU-App').collection('program');
         const courseCollection = client.db('PU-App').collection('course');
+        const universityCollection = client.db('PU-App').collection('university');
         const orderCollection = client.db('PU-App').collection('order');
         const userCollection = client.db('PU-App').collection('user');
         const reviewCollection = client.db('PU-App').collection('review');
@@ -79,6 +80,12 @@ async function run(){
             const cursor = courseCollection.find(query);
             const course = await cursor.toArray();
             res.send(course);
+        })
+        app.get('/university', async (req, res) => {
+            const query = {};
+            const cursor = universityCollection.find(query);
+            const university = await cursor.toArray();
+            res.send(university);
         })
         // Get Single Product by id
         app.get("/faculty/:id", async (req, res) => {
@@ -164,6 +171,11 @@ async function run(){
         .post('/course' , async(req,res)=>{
             const course = req.body;
             const result = await courseCollection.insertOne(course);
+            res.send(result);
+        })
+        .post('/university' , async(req,res)=>{
+            const university = req.body;
+            const result = await universityCollection.insertOne(university);
             res.send(result);
         });
         // Delete order
