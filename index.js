@@ -40,6 +40,8 @@ async function run(){
         const departmentCollection = client.db('PU-App').collection('department');
         const programCollection = client.db('PU-App').collection('program');
         const courseCollection = client.db('PU-App').collection('course');
+        const districtCollection = client.db('PU-App').collection('district');
+        const upazilaCollection = client.db('PU-App').collection('upazila');
         const universityCollection = client.db('PU-App').collection('university');
         const orderCollection = client.db('PU-App').collection('order');
         const userCollection = client.db('PU-App').collection('user');
@@ -86,6 +88,18 @@ async function run(){
             const cursor = universityCollection.find(query);
             const university = await cursor.toArray();
             res.send(university);
+        })
+        app.get('/district', async (req, res) => {
+            const query = {};
+            const cursor = districtCollection.find(query);
+            const district = await cursor.toArray();
+            res.send(district);
+        })
+        app.get('/upazila', async (req, res) => {
+            const query = {};
+            const cursor = upazilaCollection.find(query);
+            const upazila = await cursor.toArray();
+            res.send(upazila);
         })
         // Get Single Product by id
         app.get("/faculty/:id", async (req, res) => {
