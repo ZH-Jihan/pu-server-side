@@ -38,6 +38,7 @@ async function run(){
         await client.connect();
         const facultyCollection = client.db('PU-App').collection('faculty');
         const departmentCollection = client.db('PU-App').collection('department');
+        const semesterCollection = client.db('PU-App').collection('semester');
         const programCollection = client.db('PU-App').collection('program');
         const courseCollection = client.db('PU-App').collection('course');
         const districtCollection = client.db('PU-App').collection('district');
@@ -70,6 +71,12 @@ async function run(){
             const cursor = departmentCollection.find(query);
             const department = await cursor.toArray();
             res.send(department);
+        })
+        app.get('/semester', async (req, res) => {
+            const query = {};
+            const cursor = semesterCollection.find(query);
+            const semester = await cursor.toArray();
+            res.send(semester);
         })
         app.get('/program', async (req, res) => {
             const query = {};
@@ -190,6 +197,11 @@ async function run(){
         .post('/university' , async(req,res)=>{
             const university = req.body;
             const result = await universityCollection.insertOne(university);
+            res.send(result);
+        })
+        .post('/semester' , async(req,res)=>{
+            const semester = req.body;
+            const result = await semesterCollection.insertOne(semester);
             res.send(result);
         });
         // Delete order
