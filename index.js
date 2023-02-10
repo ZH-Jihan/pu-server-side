@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer')
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require('jsonwebtoken');
 const { get } = require('express/lib/response');
+const upload = multer({ dest: 'uploads/' })
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -41,6 +43,8 @@ async function run(){
         const semesterCollection = client.db('PU-App').collection('semester');
         const programCollection = client.db('PU-App').collection('program');
         const courseCollection = client.db('PU-App').collection('course');
+        const classroomCollection = client.db('PU-App').collection('classroom');
+        const routinCollection = client.db('PU-App').collection('routin');
         const districtCollection = client.db('PU-App').collection('district');
         const upazilaCollection = client.db('PU-App').collection('upazila');
         const universityCollection = client.db('PU-App').collection('university');
@@ -89,6 +93,18 @@ async function run(){
             const cursor = courseCollection.find(query);
             const course = await cursor.toArray();
             res.send(course);
+        })
+        app.get('/classroom', async (req, res) => {
+            const query = {};
+            const cursor = classroomCollection.find(query);
+            const classroom = await cursor.toArray();
+            res.send(classroom);
+        })
+        app.get('/routin', async (req, res) => {
+            const query = {};
+            const cursor = routinCollection.find(query);
+            const routin = await cursor.toArray();
+            res.send(routin);
         })
         app.get('/university', async (req, res) => {
             const query = {};
@@ -173,8 +189,8 @@ async function run(){
           const order = await orderCollection.findOne(query);
           res.send(order);
         })
-        // Order Post server
-        .post('/faculty' , async(req,res)=>{
+        // Information Post In server
+        .post('/faculty',upload.single('image'), async(req,res)=>{
             const facultyinfo = req.body;
             const result = await facultyCollection.insertOne(facultyinfo);
             res.send(result);
@@ -192,6 +208,16 @@ async function run(){
         .post('/course' , async(req,res)=>{
             const course = req.body;
             const result = await courseCollection.insertOne(course);
+            res.send(result);
+        })
+        .post('/classroom' , async(req,res)=>{
+            const classroom = req.body;
+            const result = await classroomCollection.insertOne(classroom);
+            res.send(result);
+        })
+        .post('/routin' , async(req,res)=>{
+            const routin = req.body;
+            const result = await routinCollection.insertOne(routin);
             res.send(result);
         })
         .post('/university' , async(req,res)=>{
