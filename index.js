@@ -125,6 +125,12 @@ async function run() {
       const district = await cursor.toArray();
       res.send(district);
     });
+    app.get("/facultyabsent", async (req, res) => {
+      const query = {};
+      const cursor = facultyabsentCollection.find(query);
+      const facultyabsent = await cursor.toArray();
+      res.send(facultyabsent);
+    });
     app.get("/upazila", async (req, res) => {
       const query = {};
       const cursor = upazilaCollection.find(query);
