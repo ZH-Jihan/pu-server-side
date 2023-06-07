@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const mongoose = require("mongoose");
-
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const { get } = require("express/lib/response");
