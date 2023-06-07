@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+const mongoose = require("mongoose");
+
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const { get } = require("express/lib/response");
@@ -16,6 +18,7 @@ app.use(express.json());
 // Mongo DB conect
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8jfgeef.mongodb.net/?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -73,8 +76,8 @@ async function run() {
 
     app.get("/faculty", async (req, res) => {
       const query = {};
-      const cursor = facultyCollection.find(query);
-      const faculty = await cursor.toArray();
+      const cursor = facultyCollection.find(query).sort({name:1});
+      const faculty = (await cursor.toArray());
       res.send(faculty);
     });
     app.get("/department", async (req, res) => {
@@ -97,7 +100,7 @@ async function run() {
     });
     app.get("/course", async (req, res) => {
       const query = {};
-      const cursor = courseCollection.find(query);
+      const cursor = courseCollection.find(query).sort({cInitial:1});
       const course = await cursor.toArray();
       res.send(course);
     });
