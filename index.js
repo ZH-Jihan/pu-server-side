@@ -104,7 +104,7 @@ async function run() {
     });
     app.get("/classroom", async (req, res) => {
       const query = {};
-      const cursor = classroomCollection.find(query);
+      const cursor = classroomCollection.find(query).sort({roomnum:1});
       const classroom = await cursor.toArray();
       res.send(classroom);
     });
