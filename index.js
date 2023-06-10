@@ -48,7 +48,7 @@ async function run() {
     const programCollection = client.db("PU-App").collection("program");
     const courseCollection = client.db("PU-App").collection("course");
     const classroomCollection = client.db("PU-App").collection("classroom");
-    const routinCollection = client.db("PU-App").collection("routin");
+    const routinCollection = client.db("PU-App").collection("totalRutin");
     const districtCollection = client.db("PU-App").collection("district");
     const upazilaCollection = client.db("PU-App").collection("upazila");
     const universityCollection = client.db("PU-App").collection("university");
