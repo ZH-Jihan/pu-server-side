@@ -49,12 +49,11 @@ async function run() {
     const courseCollection = client.db("PU-App").collection("course");
     const classroomCollection = client.db("PU-App").collection("classroom");
     const routinCollection = client.db("PU-App").collection("totalRutin");
+    const regstudentCollection = client.db("PU-App").collection("regstudents");
     const districtCollection = client.db("PU-App").collection("district");
     const upazilaCollection = client.db("PU-App").collection("upazila");
     const universityCollection = client.db("PU-App").collection("university");
-    const facultyabsentCollection = client
-      .db("PU-App")
-      .collection("facultyabsent");
+    const facultyabsentCollection = client.db("PU-App").collection("facultyabsent");
     const orderCollection = client.db("PU-App").collection("order");
     const userCollection = client.db("PU-App").collection("user");
     const reviewCollection = client.db("PU-App").collection("review");
@@ -131,6 +130,12 @@ async function run() {
       const cursor = facultyabsentCollection.find(query);
       const facultyabsent = await cursor.toArray();
       res.send(facultyabsent);
+    });
+    app.get("/regstudent", async (req, res) => {
+      const query = {};
+      const cursor = regstudentCollection.find(query);
+      const regstudent = await cursor.toArray();
+      res.send(regstudent);
     });
     app.get("/upazila", async (req, res) => {
       const query = {};
