@@ -43,6 +43,7 @@ async function run() {
   try {
     await client.connect();
     const facultyCollection = client.db("PU-App").collection("faculty");
+    const totalRegStudent = client.db("PU-App").collection("regstudentlists");
     const departmentCollection = client.db("PU-App").collection("department");
     const semesterCollection = client.db("PU-App").collection("semester");
     const programCollection = client.db("PU-App").collection("program");
@@ -88,6 +89,12 @@ async function run() {
       const cursor = semesterCollection.find(query);
       const semester = await cursor.toArray();
       res.send(semester);
+    });
+    app.get("/totalRegStudent", async (req, res) => {
+      const query = {};
+      const cursor = totalRegStudent.find(query);
+      const RegStudentTotal = await cursor.toArray();
+      res.send(RegStudentTotal);
     });
     app.get("/program", async (req, res) => {
       const query = {};
