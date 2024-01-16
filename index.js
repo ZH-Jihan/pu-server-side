@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId, ObjectID } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const { get } = require("express/lib/response");
 const upload = multer({ dest: "uploads/" });
@@ -303,6 +303,18 @@ async function run() {
       );
       res.send({ result, token });
     });
+    app.put("/updatefaculty/:id", async (req, res) => {
+      const id = req.params.id;
+      const faculty = req.body;
+      const query = { _id : ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $max: faculty,
+      };
+      const result = await facultyCollection.updateOne(query, updateDoc, options);
+      res.send(result);
+    });
+     
 
     app.put("/user/admin/:email", verifyJWT, verifyAdmin, async (req, res) => {
       const email = req.params.email;
