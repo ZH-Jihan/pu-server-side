@@ -55,6 +55,7 @@ async function run() {
     const upazilaCollection = client.db("PU-App").collection("upazila");
     const universityCollection = client.db("PU-App").collection("university");
     const facultyabsentCollection = client.db("PU-App").collection("facultyabsent");
+    const hostelmemberCollection = client.db("PU-App").collection("hostelmember");
     const orderCollection = client.db("PU-App").collection("order");
     const userCollection = client.db("PU-App").collection("user");
     const reviewCollection = client.db("PU-App").collection("review");
@@ -172,6 +173,13 @@ async function run() {
       res.send(review);
     });
 
+    app.get("/hostelmember", async (req, res) => {
+      const query = {};
+      const cursor = hostelmemberCollection.find(query);
+      const member = await cursor.toArray();
+      res.send(member);
+    });
+
     app.post("/review", async (req, res) => {
       const review = req.body;
       const result = await reviewCollection.insertOne(review);
@@ -243,6 +251,11 @@ async function run() {
       .post("/classroom", async (req, res) => {
         const classroom = req.body;
         const result = await classroomCollection.insertOne(classroom);
+        res.send(result);
+      })
+      .post("/hostelmember", async (req, res) => {
+        const member = req.body;
+        const result = await hostelmemberCollection.insertOne(member);
         res.send(result);
       })
       .post("/routin", async (req, res) => {
