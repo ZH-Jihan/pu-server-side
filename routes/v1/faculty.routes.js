@@ -8,7 +8,7 @@ const routes = express.Router();
 
 routes
   .route("/")
-  .get(verifyToken,facultyController.getAllFaculty)
+  .get(facultyController.getAllFaculty)
   .post(verifyToken,authorization.rolebase("admin"),facultyController.postAFaculty);
 routes
   .route("/:id")
