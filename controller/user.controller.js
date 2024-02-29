@@ -89,7 +89,6 @@ exports.login = async (req, res) => {
 
     const { password: pwd, ...others } = user.toObject();
     res.status(200)
-    .cookie("accesToken",token,options)
     .json({
       status: "Success",
       message: "Successfully LogedIn",

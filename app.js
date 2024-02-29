@@ -11,7 +11,6 @@ const hostelmemberRouts = require("./routes/v1/hostelmember.route");
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser())
 
 
 app.get("/", (req, res) => {
