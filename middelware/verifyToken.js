@@ -11,8 +11,8 @@ const {promisify} = require("util")
 module.exports = async (req,res,next) => {
     console.log(req);
     try {
-        const token = req.cookies?.accesToken;
-        // const token = req.headers?.cookie?.split("=")?.[1]
+        // const token = req.cookies?.accesToken;
+        const token = req.headers?.cookie?.split("=")?.[1]
         
         if (!token) {
             return res.status(401).json({
