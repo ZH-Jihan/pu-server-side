@@ -17,7 +17,7 @@ router.post("/login", userController.login);
 
 router.get("/me", verifyToken, userController.getMe);
 
-router.post("/logout", verifyToken, userController.logOutUSer);
+router.post("/logout",  userController.logOutUSer);
 router.post(
   "/changepassword",
   verifyToken,
