@@ -6,7 +6,7 @@ const authorization = require("../../middelware/authorization");
 
 routes
   .route("/")
-  .get(verifyToken, classRoomControlar.getAllClass)
+  .get(classRoomControlar.getAllClass)
   .post(
     verifyToken,
     authorization.rolebase("admin"),

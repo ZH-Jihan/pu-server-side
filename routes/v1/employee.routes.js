@@ -6,7 +6,7 @@ const EmployeeControler = require("../../controller/employee.controller");
 
 routes
 .route("/")
-.get(verifyToken,EmployeeControler.getAllEmployee)
+.get(EmployeeControler.getAllEmployee)
 .post(verifyToken,authorization.rolebase("admin"),EmployeeControler.postEmployee)
 
 routes
