@@ -122,7 +122,7 @@ exports.getMe = async (req, res) => {
 };
 
 exports.logOutUSer = async(req,res)=>{
-  
+  console.log(req);
   const user = await findUserByEmail(req.user?.email);
   
   if (user) {

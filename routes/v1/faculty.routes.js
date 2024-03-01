@@ -9,12 +9,27 @@ const routes = express.Router();
 routes
   .route("/")
   .get(facultyController.getAllFaculty)
-  .post(verifyToken,authorization.rolebase("admin"),facultyController.postAFaculty);
+  .post(
+    verifyToken,
+    authorization.rolebase("admin"),
+    facultyController.postAFaculty
+  );
 routes
   .route("/:id")
-  .get(viewCount,limiter ,verifyToken,facultyController.getOneFaculty)
-  .put(verifyToken,authorization.rolebase("admin"),facultyController.updateOneFaculty)
-  .delete(verifyToken,authorization.rolebase("admin"),facultyController.deleteOneFaculty)
+  .get(
+    viewCount, 
+    limiter, 
+    // verifyToken, 
+    facultyController.getOneFaculty)
+  .put(
+    // verifyToken,
+    // authorization.rolebase("admin"),
+    facultyController.updateOneFaculty
+  )
+  .delete(
+    verifyToken,
+    authorization.rolebase("admin"),
+    facultyController.deleteOneFaculty
+  );
 
-
-module.exports = routes; 
+module.exports = routes;
