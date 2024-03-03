@@ -21,12 +21,23 @@ const hostelmemberScema = mongoose.Schema({
     },
     flate:String,
     room:String,
-    bad:String,
+    seat:String,
     department:String,
     batch:String,
     semester:String,
-
-});
+    createby:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
+    updateby:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }
+},
+{
+    timestamps:true
+}
+);
 
 const HostelMember = mongoose.model("HostelMember",hostelmemberScema);
 

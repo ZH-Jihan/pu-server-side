@@ -7,6 +7,7 @@ const routes = express.Router();
 routes
   .route("/")
   .get(
+    verifyToken,
     memberControler.getAllMember
   )
   .post(

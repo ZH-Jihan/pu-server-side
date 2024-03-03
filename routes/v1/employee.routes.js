@@ -6,13 +6,13 @@ const EmployeeControler = require("../../controller/employee.controller");
 
 routes
 .route("/")
-.get(EmployeeControler.getAllEmployee)
-.post(verifyToken,authorization.rolebase("admin"),EmployeeControler.postEmployee)
+.get(verifyToken,EmployeeControler.getAllEmployee)
+.post(verifyToken,authorization.rolebase("admin","editor"),EmployeeControler.postEmployee)
 
 routes
 .route("/:id")
 .get(verifyToken,EmployeeControler.getOneEmployee)
-.put(verifyToken,authorization.rolebase("admin"),EmployeeControler.updateEmployee)
+.put(verifyToken,authorization.rolebase("admin","editor"),EmployeeControler.updateEmployee)
 .delete(verifyToken,authorization.rolebase("admin"),EmployeeControler.deleteEmployee)
 
 module.exports = routes;

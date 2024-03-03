@@ -10,7 +10,7 @@ const hostelmemberRouts = require("./routes/v1/hostelmember.route");
 // Middleware
 app.use(express.json());
 app.use(cors(
-  {withCredentials:true,}
+  {withCredentials:true}
 ))
 
 app.use((req, res, next) => {

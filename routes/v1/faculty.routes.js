@@ -8,22 +8,22 @@ const routes = express.Router();
 
 routes
   .route("/")
-  .get(facultyController.getAllFaculty)
+  .get(verifyToken,facultyController.getAllFaculty)
   .post(
     verifyToken,
-    authorization.rolebase("admin"),
+    authorization.rolebase("admin","editor"),
     facultyController.postAFaculty
   );
 routes
   .route("/:id")
   .get(
-    viewCount, 
-    limiter, 
-    // verifyToken, 
+    // viewCount, 
+    // limiter, 
+    verifyToken, 
     facultyController.getOneFaculty)
   .put(
-    // verifyToken,
-    // authorization.rolebase("admin"),
+    verifyToken,
+    authorization.rolebase("admin","editor"),
     facultyController.updateOneFaculty
   )
   .delete(

@@ -24,11 +24,14 @@ module.exports.getOneMember = async (req,res,next) =>{
 }
 
 module.exports.postMember = async (req,res,next) =>{
+  console.log(req.body);
     const member = req.body;
     try{
-        const newMember = new HostelMember(member)
-        await newMember.save()
-        res.send(newMember)
+        const newMember = await HostelMember.create({...member,createby:req.user.id})
+        res.status(200).json({
+          status: "Success",
+          data: newMember,
+        });
       }
       catch (error) {
         res.send(error);
@@ -39,9 +42,12 @@ module.exports.editMember = async (req,res,next) =>{
     const member = req.body;
     const {id} = req.params;
     try{
-        const editmember = await  HostelMember.findByIdAndUpdate( id,member,{new:true})
+        const editmember = await  HostelMember.findByIdAndUpdate( id,{...member,updateby:req.user.id},{new:true})
 
-        res.send(editmember)
+        res.status(200).json({
+          status: "Successfully Update Member",
+          data: editmember,
+        })
       }
       catch (error) {
         res.send(error);

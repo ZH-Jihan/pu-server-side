@@ -47,7 +47,18 @@ const facultyScema = mongoose.Schema({
     default: "Active"
   },
   sex: String,
-});
+  createby:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  },
+  updateby:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  }
+},{
+  timestamps:true,
+}
+);
 
 const Faculty = mongoose.model("Faculty", facultyScema);
 
