@@ -7,7 +7,7 @@ const routes = express.Router();
 
 routes
   .route("/")
-  .get(viewCount,limiter ,regStudentController.getAllRegStudent)
+  .get(regStudentController.getAllRegStudent)
   .post();
 
 
