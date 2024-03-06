@@ -10,9 +10,7 @@ const regStudent = require("./routes/v1/regstudents.routes");
 
 // Middleware
 app.use(express.json());
-app.use(cors(
-  {withCredentials:true}
-))
+app.use(cors())
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
