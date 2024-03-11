@@ -81,13 +81,6 @@ module.exports.login = async (req, res) => {
     }
     //..Generate JWT Access Token .../
     const token = generateToken(user);
-    const options = {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None' ,
-      path:"/"
-  }
-    //..Set Access Token In Cokies ..//
 
     const { password: pwd, ...others } = user.toObject();
     res.status(200)
