@@ -8,8 +8,8 @@ router.get("/", userController.getAllUser);
 
 router.post(
   "/singup",
-  // verifyToken,
-  // authorization.rolebase("admin"),
+  verifyToken,
+  authorization.rolebase("admin"),
   userController.singup
 );
 
