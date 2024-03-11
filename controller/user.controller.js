@@ -12,8 +12,9 @@ exports.getAllUser = async (req, res, next) => {
 
 
 exports.singup = async (req, res) => {
+  const newUser = req.body
   try {
-    const user = await signupService(req.body);
+    const user = await User.create({...newUser, createby: req.user.id});
 
     res.status(200).json({
       status: "Success",

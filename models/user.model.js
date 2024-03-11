@@ -58,6 +58,14 @@ const userSchema = mongoose.Schema(
             type: Array,
             required:[true, "Please Provied permission for this user"],
         },
+        createby:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        },
+        updateby:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        },
         passwordChangeAt: Date,
     },
     {
