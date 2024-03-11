@@ -21,28 +21,28 @@ const userSchema = mongoose.Schema(
         password:{
             type:String,
             required: [true,"Password is required"],
-            validate:{
-                validator:(value)=>
-                validator.isStrongPassword(value,{
-                    minLength : 6,
-                    // minLowercase:3,
-                    // minNumber:1,
-                    // minUppercase:1,
-                    // minSymbols:1,
-                }),
-                message: "Password {VALUE} is not strong enough",
-            },
+            // validate:{
+            //     validator:(value)=>
+            //     validator.isStrongPassword(value,{
+            //         minLength : 6,
+            //         // minLowercase:3,
+            //         // minNumber:1,
+            //         // minUppercase:1,
+            //         // minSymbols:1,
+            //     }),
+            //     message: "Password {VALUE} is not strong enough",
+            // },
         },
         demo: String,
         confirmPassword:{
             type: String,
             required:[true,"Please confirm your password"],
-            validate:{
-                validator:function(value){
-                    return value === this.password;
-                },
-                massage:"Passwords don't match!",
-            },
+            // validate:{
+            //     validator:function(value){
+            //         return value === this.password;
+            //     },
+            //     massage:"Passwords don't match!",
+            // },
         },
         role:{
             type: String,
@@ -62,10 +62,10 @@ const userSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref:"User"
         },
-        updateby:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"User"
-        },
+        // updateby:{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref:"User"
+        // },
         passwordChangeAt: Date,
     },
     {

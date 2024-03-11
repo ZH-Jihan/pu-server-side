@@ -1,8 +1,8 @@
 const { signupService, findUserByEmail } = require("../services/user.service");
 const { generateToken } = require("../utils/token");
-const User = require("../models/user.model");
+const User = require("../models/user.model")
 
-exports.getAllUser = async (req, res, next) => {
+module.exports.getAllUser = async (req, res, next) => {
   const allUser = await User.find({});
   res.status(200).json({
     status: "Success",
@@ -11,11 +11,12 @@ exports.getAllUser = async (req, res, next) => {
 };
 
 
-exports.singup = async (req, res) => {
+module.exports.singup = async (req, res) => {
+  
   const newUser = req.body
   try {
-    const user = await User.create({...newUser, createby: req.user.id});
-
+    const user = await User.create({...newUser,createby: req.user.id});
+console.log(user);
     res.status(200).json({
       status: "Success",
       message: "Successfully SingUp",
@@ -41,7 +42,7 @@ exports.singup = async (req, res) => {
  * 9. Send user and token
  */
 
-exports.login = async (req, res) => {
+module.exports.login = async (req, res) => {
 
   try {
     const { email, password } = req.body;
@@ -106,7 +107,7 @@ exports.login = async (req, res) => {
 //....
     //..... When User Get His Personal Info .....//
 
-exports.getMe = async (req, res) => {
+module.exports.getMe = async (req, res) => {
   try {
     const user = await findUserByEmail(req.user?.email);
     const { password: pwd, ...others } = user.toObject();
@@ -122,7 +123,7 @@ exports.getMe = async (req, res) => {
   }
 };
 
-exports.logOutUSer = async(req,res)=>{
+module.exports.logOutUSer = async(req,res)=>{
   console.log(req);
   const user = await findUserByEmail(req.user?.email);
   
@@ -142,7 +143,7 @@ exports.logOutUSer = async(req,res)=>{
   }
 }
 
-exports.changeCurrentPassword = async(req, res) => {
+module.exports.changeCurrentPassword = async(req, res) => {
 
  try {
    const {oldPassword, newPassword} = req.body
