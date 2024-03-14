@@ -15,7 +15,10 @@ module.exports.getOneMember = async (req,res,next) =>{
   const {id} = req.params;
     try{
         const oneMember = await  HostelMember.find({_id : id})
-        res.send(oneMember)
+        res.status(200).json({
+          status: "Success",
+          data: oneMember,
+        })
       }
       catch (error) {
         console.error(error);
