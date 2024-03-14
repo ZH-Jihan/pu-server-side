@@ -81,8 +81,7 @@ module.exports.login = async (req, res) => {
     }
     //..Generate JWT Access Token .../
     const token = generateToken(user);
-
-    const { password: pwd, ...others } = user.toObject();
+    
     res.status(200)
     .json({
       status: "Success",

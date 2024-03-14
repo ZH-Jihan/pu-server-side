@@ -53,3 +53,23 @@ module.exports.editMember = async (req,res,next) =>{
         res.send(error);
       }
 }
+module.exports.delete = async (req,res,next) =>{
+  const {id} = req.params;
+
+  try {
+      const deletedDocument = await HostelMember.findByIdAndUpdate(
+          id,
+          { $set: { isDeleted: true ,deleteby : req.user?.id} },
+          { new: true }
+      );
+
+      if (!deletedDocument) {
+          return res.status(404).json({ message: 'Document not found' });
+      }
+
+      res.json({ message: 'Document soft-deleted successfully', deletedDocument });
+  } catch (error) {
+      console.error('Error soft-deleting document', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

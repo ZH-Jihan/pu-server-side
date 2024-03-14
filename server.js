@@ -1,6 +1,6 @@
 const dotenv = require("dotenv").config();
 const app = require("./app");
-const dbConnect = require("./utils/dbConnect");
+const dbConnect = require("./src/utils/dbConnect");
 
 
 dbConnect()

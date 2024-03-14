@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const facultyRouters = require("./routes/v1/faculty.routes");
-const userRouter = require("./routes/v1/user.route");
-const classroomRouters = require("./routes/v1/classroom.router");
-const employeeRoutes = require("./routes/v1/employee.routes");
-const hostelmemberRouts = require("./routes/v1/hostelmember.route");
-const regStudent = require("./routes/v1/regstudents.routes");
+const facultyRouters = require("./src/routes/v1/faculty.routes.js");
+const userRouter = require("./src/routes/v1/user.routes.js");
+const classroomRouters = require("./src/routes/v1/classroom.routes.js");
+const employeeRoutes = require("./src/routes/v1/employee.routes.js");
+const hostelmemberRouts = require("./src/routes/v1/hostelmember.routes.js");
+const regStudent = require("./src/routes/v1/regstudents.routes.js");
 
 // Middleware
 app.use(express.json());

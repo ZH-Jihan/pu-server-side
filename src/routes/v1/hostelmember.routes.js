@@ -26,6 +26,11 @@ routes
     verifyToken,
     authorization.rolebase("admin", "editor"),
     memberControler.editMember
-  );
+  )
+  .delete(
+    verifyToken,
+    authorization.rolebase("admin", "editor"),
+    memberControler.delete
+  )
 
 module.exports = routes;

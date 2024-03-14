@@ -22,10 +22,39 @@ const hostelmemberScema = mongoose.Schema({
     flate:String,
     room:String,
     seat:String,
+    localguardian:{
+        type:String,
+        default: "Not Entry"
+    },
+    localguardiannumber:{
+        type:String,
+        default: "Not Entry"
+    },
+    father:{
+        type:String,
+        default: "Not Entry"
+    },
+    fathernumber:{
+        type:String,
+        default: "Not Entry"
+    },
+    mother:{
+        type:String,
+        default: "Not Entry"
+    },
+    mothernumber:{
+        type:String,
+        default: "Not Entry"
+    },
     department:String,
     batch:String,
     semester:String,
     createby:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
+    isDeleted: { type: Boolean, default: false },
+    deleteby:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
