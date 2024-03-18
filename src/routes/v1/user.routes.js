@@ -2,26 +2,31 @@ const express = require("express");
 const userController = require("../../controller/user.controller");
 const verifyToken = require("../../middelware/verifyToken");
 const authorization = require("../../middelware/authorization");
-const router = express.Router();
+const routers = express.Router();
 
-router.get("/", userController.getAllUser);
+routers.route("/").get(userController.getAllUser);
 
-router.post(
-  "/singup",
-  verifyToken,
-  authorization.rolebase("admin"),
-  userController.singup
-);
+routers
+  .route("/singup")
+  .post(verifyToken, authorization.rolebase("admin"), userController.singup);
 
-router.post("/login", userController.login);
+routers.route("/login").post(userController.login);
 
-router.get("/me", verifyToken, userController.getMe);
+routers.route("/current").get(verifyToken, userController.getMe);
 
-router.post("/logout",  userController.logOutUSer);
-router.post(
-  "/changepassword",
-  verifyToken,
-  userController.changeCurrentPassword
-);
+routers
+  .route("/:id")
+  .get(userController.getUserById)
+  .put(
+    verifyToken,
+    authorization.rolebase("admin"),
+    userController.updateUserByAdmin
+  );
 
-module.exports = router;
+routers.route("/logout").post(userController.logOutUSer);
+
+routers
+  .route("/changepassword")
+  .post(verifyToken, userController.changeCurrentPassword);
+
+module.exports = routers;

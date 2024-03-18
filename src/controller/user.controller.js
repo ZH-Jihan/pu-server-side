@@ -1,6 +1,6 @@
 const { signupService, findUserByEmail } = require("../services/user.service");
 const { generateToken } = require("../utils/token");
-const User = require("../models/user.model")
+const User = require("../models/user.model");
 
 module.exports.getAllUser = async (req, res, next) => {
   const allUser = await User.find({});
@@ -10,13 +10,11 @@ module.exports.getAllUser = async (req, res, next) => {
   });
 };
 
-
 module.exports.singup = async (req, res) => {
-  
-  const newUser = req.body
+  const newUser = req.body;
   try {
-    const user = await User.create({...newUser,createby: req.user.id});
-console.log(user);
+    const user = await User.create({ ...newUser, createby: req.user.id });
+    
     res.status(200).json({
       status: "Success",
       message: "Successfully SingUp",
@@ -43,7 +41,6 @@ console.log(user);
  */
 
 module.exports.login = async (req, res) => {
-
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -65,7 +62,7 @@ module.exports.login = async (req, res) => {
 
     //...User Password hash and database password hash compare ../
     const isPasswordValid = user.comparePassword(password, user.password);
-    
+
     if (!isPasswordValid) {
       return res.status(403).json({
         status: "fail",
@@ -81,12 +78,11 @@ module.exports.login = async (req, res) => {
     }
     //..Generate JWT Access Token .../
     const token = generateToken(user);
-    
-    res.status(200)
-    .json({
+
+    res.status(200).json({
       status: "Success",
       message: "Successfully LogedIn",
-      token:token
+      token: token,
     });
   } catch (error) {
     res.status(500).json({
@@ -97,15 +93,15 @@ module.exports.login = async (req, res) => {
 };
 
 //....
-    //..... When User Get His Personal Info .....//
+//..... When User Get His Personal Info .....//
 
 module.exports.getMe = async (req, res) => {
   try {
     const user = await findUserByEmail(req.user?.email);
-    const { password: pwd, ...others } = user.toObject();
+    const { password: pwd, demo: pd, ...others } = user.toObject();
     res.status(200).json({
       status: "Success",
-      data: others
+      data: others,
     });
   } catch (error) {
     res.status(500).json({
@@ -115,52 +111,90 @@ module.exports.getMe = async (req, res) => {
   }
 };
 
-module.exports.logOutUSer = async(req,res)=>{
-  console.log(req);
+module.exports.getUserById = async (req, res) => {
+  const { id } = req.params;
+ 
+  try {
+    const user = await User.find({ _id: id });
+    
+    const { password: pwd, demo: pWd, ...others } = user[0].toObject();
+    res.status(200).json({
+      status: "Success",
+      data: others,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      error,
+    });
+  }
+};
+
+module.exports.updateUserByAdmin = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: id },
+      { ...updateData, updateby: req.user?.id },
+      { new: true }
+    );
+    const { password: pwd, demo: pWd, ...others } = user.toObject();
+
+    res.status(200).json({
+      status: "Successfully Update User"
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      error,
+    });
+  }
+};
+
+module.exports.logOutUSer = async (req, res) => {
   const user = await findUserByEmail(req.user?.email);
-  
+
   if (user) {
     const options = {
       httpOnly: true,
       secure: true,
-      sameSite: 'None' ,
-      path:"/"
+      sameSite: "None",
+      path: "/",
+    };
+
+    return res
+      .status(200)
+      .clearCookie("accesToken", options)
+      .clearCookie("userInfo", options)
+      .json({ status: "logOut Success" });
   }
+};
 
-  return res
-  .status(200)
-  .clearCookie("accesToken",options)
-  .clearCookie("userInfo",options)
-  .json({status : "logOut Success"})
+module.exports.changeCurrentPassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user?.id);
+   
+    const isPasswordValid = user.comparePassword(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(403).json({
+        status: "fail",
+        error: "Ole Password is not correct",
+      });
+    }
+
+    user.password = newPassword;
+    user.passwordChangeAt = new Date();
+    await user.save({ validateBeforeSave: false });
+
+    return res.status(200).json({
+      status: "Password Successfully Changed",
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
   }
-}
-
-module.exports.changeCurrentPassword = async(req, res) => {
-
- try {
-   const {oldPassword, newPassword} = req.body
- 
-   const user = await User.findById(req.user?.id)
-   console.log(user);
-   const isPasswordValid = user.comparePassword(oldPassword,user.password);
- 
-   if (!isPasswordValid) {
-     return res.status(403).json({
-       status: "fail",
-       error: "Ole Password is not correct",
-     });
-   }
- 
-   user.password = newPassword
-   user.passwordChangeAt = new Date()
-   await user.save({validateBeforeSave: false})
- 
-   return res
-   .status(200)
-   .json({
-    status: "Password Successfully Changed",
-    user:user
-  })
- } catch (error) {
-  console.log(error)}
-}
+};

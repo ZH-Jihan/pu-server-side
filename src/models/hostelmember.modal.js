@@ -46,6 +46,12 @@ const hostelmemberScema = mongoose.Schema({
         type:String,
         default: "Not Entry"
     },
+    avatar: {
+        type: {
+            public_id: String,
+            url: String //cloudinary url
+        }
+    },
     department:String,
     batch:String,
     semester:String,
