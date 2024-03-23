@@ -7,6 +7,7 @@ const classroomRouters = require("./src/routes/v1/classroom.routes.js");
 const employeeRoutes = require("./src/routes/v1/employee.routes.js");
 const hostelmemberRouts = require("./src/routes/v1/hostelmember.routes.js");
 const regStudent = require("./src/routes/v1/regstudents.routes.js");
+const convoTeamRouts = require("./src/routes/v1/convoTeam.routes.js");
 
 // Middleware
 app.use(express.json());
@@ -31,6 +32,7 @@ app.use("/api/v1/classroom", classroomRouters);
 app.use("/api/v1/employee", employeeRoutes);
 app.use("/api/v1/hostelmember", hostelmemberRouts);
 app.use("/api/v1/regstudent", regStudent);
+app.use("/api/v1/convocationTeam", convoTeamRouts);
 
 
 module.exports = app;
