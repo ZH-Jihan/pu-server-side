@@ -5,9 +5,11 @@ const convocationTeamSchema = mongoose.Schema({
     teamName :String,
     teamLeader : String,
     teamSecretary : String,
+    responsibility: String,
     teamMember:{
         type:Array
     },
+    
     createby:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"

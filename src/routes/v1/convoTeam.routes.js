@@ -2,7 +2,7 @@ const express = require("express");
 const routes = express.Router();
 const verifyToken = require("../../middelware/verifyToken");
 const authorization = require("../../middelware/authorization");
-const { postTeamData, getAllTeam } = require("../../controller/convoTeam.controller");
+const { postTeamData, getAllTeam, getOneTeam } = require("../../controller/convoTeam.controller");
 
 routes
   .route("/")
@@ -12,5 +12,9 @@ routes
     authorization.rolebase("admin", "editor"), 
     postTeamData
     );
+
+routes
+.route("/:id")
+.get(verifyToken,getOneTeam)
 
 module.exports = routes

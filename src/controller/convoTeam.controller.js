@@ -20,3 +20,13 @@ module.exports.getAllTeam = async (req,res) =>{
     res.send(error)
   }
 }
+
+module.exports.getOneTeam = async (req,res) =>{
+  const {id} = req.params;
+  try {
+    const team = await ConvocationTeam.findOne({_id : id});
+    res.send(team)
+  } catch (error) {
+    res.send(error)
+  }
+}
