@@ -3,6 +3,7 @@ const verifyToken = require("../../middelware/verifyToken");
 const memberControler = require("../../controller/hostelmember.controller");
 const authorization = require("../../middelware/authorization");
 const routes = express.Router();
+const upload = require("../../middelware/multer")
 
 routes
   .route("/")
@@ -12,6 +13,7 @@ routes
   )
   .post(
     verifyToken,
+    upload.single("avatar"),
     authorization.rolebase("admin", "editor"),
     memberControler.postMember
   );
@@ -24,6 +26,12 @@ routes
   )
   .put(
     verifyToken,
+    upload.fields([
+      {
+          name: "avatar",
+          maxCount: 1
+      }
+  ]),
     authorization.rolebase("admin", "editor"),
     memberControler.editMember
   )
