@@ -31,26 +31,25 @@ module.exports.getOneMember = async (req, res, next) => {
 module.exports.postMember = async (req, res, next) => {
   
   
-  const member = req.body.otherInfo;
-  console.log(member);
-  const avatarLocalPath = req.files
-  const avatar = await uploadOnCloudinary(avatarLocalPath).catch((error) =>
-    console.log(error)
-  );
-  console.log(avatarLocalPath);
+  const member = req.body;
+  // console.log(member);
+  // const avatarLocalPath = req.files
+  // const avatar = await uploadOnCloudinary(avatarLocalPath).catch((error) =>
+  //   console.log(error)
+  // );
   try {
-    // const newMember = await HostelMember.create({
-    //   ...member,
-    //   createby: req.user.id,
-    //   avatar: {
-    //     public_id: avatar.public_id,
-    //     url: avatar.secure_url,
-    //   },
-    // });
-    // res.status(200).json({
-    //   status: "Success",
-    //   // data: newMember,
-    // });
+    const newMember = await HostelMember.create({
+      ...member,
+      createby: req.user.id,
+      // avatar: {
+      //   public_id: avatar.public_id,
+      //   url: avatar.secure_url,
+      // },
+    });
+    res.status(200).json({
+      status: "Success",
+      data: newMember,
+    });
   } catch (error) {
     res.send(error);
   }
@@ -59,32 +58,32 @@ module.exports.postMember = async (req, res, next) => {
 module.exports.editMember = async (req, res, next) => {
   const member = req.body;
   const { id } = req.params;
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-  console.log(avatarLocalPath);
-  const avatar = await uploadOnCloudinary(avatarLocalPath)
+  // const avatarLocalPath = req.files?.avatar[0]?.path;
+  // console.log(avatarLocalPath);
+  // const avatar = await uploadOnCloudinary(avatarLocalPath)
   
   try {
     const user = await HostelMember.findById({_id:id}).select("avatar");
-    const avatarToDelete = user.avatar.public_id;
+    // const avatarToDelete = user.avatar.public_id;
     const editmember = await HostelMember.findByIdAndUpdate(
-      {_id:id},
+      id,
       {
           $set:{
             ...member,
-            avatar: {
-              public_id: avatar.public_id,
-              url: avatar.secure_url
-          },
+          //   avatar: {
+          //     public_id: avatar.public_id,
+          //     url: avatar.secure_url
+          // },
           updateby:req.user.id
         }
       },
       { new: true }
     );
-    console.log(editmember );
+    // console.log(editmember );
     
-    if (avatarToDelete && editmember.avatar.public_id) {
-      await deleteOnCloudinary(avatarToDelete);
-  }
+  //   if (avatarToDelete && editmember.avatar.public_id) {
+  //     await deleteOnCloudinary(avatarToDelete);
+  // }
 
     res.status(200).json({
       status: "Successfully Update Member",
@@ -94,6 +93,7 @@ module.exports.editMember = async (req, res, next) => {
     res.send(error);
   }
 };
+
 module.exports.delete = async (req, res, next) => {
   const { id } = req.params;
 
@@ -109,7 +109,7 @@ module.exports.delete = async (req, res, next) => {
     }
 
     res.json({
-      message: "Document soft-deleted successfully",
+      message: "Document deleted successfully",
       deletedDocument,
     });
   } catch (error) {
