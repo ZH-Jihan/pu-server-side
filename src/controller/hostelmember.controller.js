@@ -117,3 +117,20 @@ module.exports.delete = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+module.exports.backmember = async (req,res) => {
+  const { id } = req.params;
+  try {
+    const backMember = await HostelMember.findByIdAndUpdate(
+      id,
+      { $set: { isDeleted: false, updateby: req.user?.id } },
+      { new: true }
+    );
+    res.json({
+      message: "Document deleted successfully",
+      backMember,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}

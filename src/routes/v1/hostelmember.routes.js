@@ -17,7 +17,13 @@ routes
     authorization.rolebase("admin", "editor"),
     memberControler.postMember
   );
-
+routes
+.route("/backmember/:id")
+.delete(
+  verifyToken,
+  authorization.rolebase("admin", "editor"),
+  memberControler.backmember
+)
 routes
   .route("/:id")
   .get(
