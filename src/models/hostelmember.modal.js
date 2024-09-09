@@ -38,6 +38,10 @@ const hostelmemberScema = mongoose.Schema({
         type:String,
         default: "Not Entry"
     },
+    reference:{
+        type:String,
+        default: "Not Entry"
+    },
     mother:{
         type:String,
         default: "Not Entry"
